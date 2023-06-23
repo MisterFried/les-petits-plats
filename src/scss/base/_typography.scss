@@ -1,0 +1,16 @@
+// * Default style
+p, span, input {
+    font-family: var(--ff-base);
+    font-size: var(--fs-400);
+    font-weight: 400;
+    color: var(--clr-texte);
+}
+
+// * Heading 1
+.header__title {
+    font-family: var(--ff-accent);
+    font-size: var(--fs-600);
+    font-weight: 400;
+    color: var(--clr-primary);
+    text-align: center;
+}

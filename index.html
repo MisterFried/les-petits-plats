@@ -1,13 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="keywords"
+			content="recettes de cuisine, plats savoureux, entrées, desserts, 
+			chefs amateurs, instructions, communauté culinaire, inspiration 
+			culinaire, délicieux repas, cuisine maison, astuces de cuisine, 
+			recettes faciles, gourmandise" />
+		<meta
+			name="description"
+			content="Les Petits Plats est votre source incontournable pour des 
+			recettes de cuisine délicieuses et faciles à réaliser. Découvrez 
+			une variété de plats savoureux, des entrées alléchantes aux desserts 
+			gourmands. Que vous soyez un chef amateur ou passionné, notre site 
+			vous offre des instructions claires, des conseils pratiques et des 
+			idées créatives pour éveiller vos papilles. Rejoignez notre communauté 
+			culinaire et laissez-vous inspirer par nos recettes simples et 
+			réussies." />
+		<link rel="icon" href="/favicon/favicon.svg" />
+		<link rel="stylesheet" href="/src/scss/style.scss" />
+		<title>Les petits plats - Acceuil</title>
+	</head>
+
+	<body>
+		<header class="header">
+			<img src="/images/les-petits-plats.png" class="header__logo" alt="Logo les petits plats" />
+			<h1 class="header__title">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
+			<form class="header__searchbar">
+				<input
+					type="texte"
+					class="header__input"
+					placeholder="Rechercher une recette, un ingrédient, ..." />
+				<button type="button" class="header__button">
+					<svg viewBox="0 0 28 28" id="search-icon">
+						<g id="search-icon__content">
+							<circle cx="10" cy="10" r="9.5" fill="none"/>
+							<line x1="18.3536" y1="18.6464" x2="27.3536" y2="27.6464" />
+						</g>
+					</svg>
+				</button>
+			</form>
+		</header>
+	</body>
 </html>
