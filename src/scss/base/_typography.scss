@@ -1,16 +1,47 @@
 // * Default style
-p, span, input {
-    font-family: var(--ff-base);
-    font-size: var(--fs-400);
-    font-weight: 400;
-    color: var(--clr-texte);
+* {
+	font-family: var(--ff-base);
+	font-size: var(--fs-400);
+	color: var(--clr-texte);
+	font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--ff-accent);
 }
 
 // * Heading 1
 .header__title {
-    font-family: var(--ff-accent);
-    font-size: var(--fs-600);
-    font-weight: 400;
-    color: var(--clr-primary);
-    text-align: center;
+	font-size: var(--fs-700);
+	color: var(--clr-primary);
+	text-align: center;
+}
+
+.recipe-card__recipe-text,
+.recipe-card__ingredient-text,
+.recipe-card__ingredient-quantity {
+	color: var(--clr-grey);
+	font-family: var(--ff-base);
+}
+
+.recipe-card__recipe-text,
+.recipe-card__description,
+.recipe-card__ingredient-text,
+.recipe-card__ingredient-name,
+.recipe-card__ingredient-quantity {
+	font-size: var(--fs-200);
+}
+
+.recipe-card__ingredient-name {
+	font-weight: 500;
+}
+
+.recipe-card__recipe-text,
+.recipe-card__ingredient-text {
+	font-weight: 600;
 }

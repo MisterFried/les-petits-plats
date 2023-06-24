@@ -1,71 +1,81 @@
 @use "../abstracts/_mixins.scss" as m;
 
 .header {
-    @include m.flexbox(column, 2rem, nowrap, center, center);
-    position: relative;
+	@include m.flexbox(column, 2rem, nowrap, center, center);
+	position: relative;
 
-    height: 41rem;
-    padding: 2rem;
+	height: 660px;
+	padding: 2rem;
 
-    background: url("/images/homepage-background.webp") center;
+	background: url("/images/homepage-background.webp") center;
 
-    &__logo {
-        position: absolute;
-        inset: 2rem auto auto 2rem;
+	&__logo {
+		position: absolute;
+		inset: 2rem auto auto 2rem;
 
-        height: 1.5rem;
-    }
+		height: 1.5rem;
+	}
 
-    &__title {
-        max-width: 40rem;
-    }
+	&__title {
+		max-width: 40rem;
+	}
 
-    &__searchbar {
-        @include m.flexbox(row, 1rem, nowrap, center);
+	&__searchbar {
+		@include m.flexbox(row, 1rem, nowrap, center);
 
-        width: min(80ch, 100%);
-        padding: 0.5rem;
-        border-radius: 0.5rem;
+		width: min(80ch, 100%);
+		padding: 0.5rem;
+		border-radius: 0.5rem;
 
-        background-color: var(--clr-white);
-    }
+		background-color: var(--clr-white);
+	}
 
-    &__input {
-        width: 100%;
-        padding-inline: 0.5rem;
-        border: none;
+	&__input {
+		width: 100%;
+		padding-inline: 0.5rem;
+		border: none;
 
-        background-color: transparent;
-    }
+		background-color: transparent;
+	}
 
-    &__button {
-        border: none;
+	&__button {
+		@include m.flexbox();
+		border: none;
 
-        background-color: transparent;
+		background-color: transparent;
 
-        #search-icon {
-            width: 3rem;
-            height: 3rem;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
+		&:hover,
+		&:focus {
+			#search-icon {
+				background-color: var(--clr-primary);
 
-            background-color: var(--clr-texte);
+				&__content {
+					stroke: var(--clr-texte);
+				}
+			}
+		}
 
-            transition: all 0.2s ease-in-out;
+		#search-icon {
+			width: 3rem;
+			height: 3rem;
+			padding: 0.5rem;
+			border-radius: 0.5rem;
 
-            &__content {
-                stroke: var(--clr-white);
+			background-color: var(--clr-texte);
 
-                transition: all 0.2s ease-in-out;
-            }
+			transition: all 0.2s ease-in-out;
 
-            &:hover {
-                background-color: var(--clr-primary);
+			&__content {
+				stroke: var(--clr-white);
 
-                #search-icon__content {
-                    stroke: var(--clr-texte);
-                }
-            }
-        }
-    }
+				transition: all 0.2s ease-in-out;
+			}
+		}
+	}
+}
+
+.recipes {
+	@include m.flexbox(row, 3rem, wrap, center, normal);
+
+	padding: 2rem;
 }

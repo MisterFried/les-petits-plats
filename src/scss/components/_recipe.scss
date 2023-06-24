@@ -1,0 +1,72 @@
+@use "../abstracts/mixins" as m;
+
+.recipe-card {
+	@include m.flexbox(column, 0, nowrap, normal, center);
+
+	width: min(380px, 100%);
+	border-radius: 0.5rem;
+
+	@include m.standardShadow();
+	overflow: hidden;
+
+	transition: all 0.2s ease-in-out;
+
+	&__image {
+		z-index: -1;
+
+		transition: all 0.2s ease-in-out;
+	}
+
+	&__text-content {
+		@include m.flexbox(column, 1rem);
+		flex-grow: 1;
+
+		padding: 1.5rem 1.5rem 2rem;
+
+		background-color: var(--clr-white);
+	}
+
+	&__name {
+		margin-bottom: 0.5rem;
+	}
+
+	&__description-container {
+		@include m.flexbox(column, 0.25rem);
+	}
+
+	&__description {
+		display: -webkit-box;
+
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	&__ingredients-container {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.5rem;
+	}
+
+	&__ingredient-text {
+		grid-column: span 2;
+	}
+
+	&__ingredient-container {
+		@include m.flexbox(column);
+
+		margin-bottom: 0.5rem;
+	}
+
+	&:hover,
+	&:focus {
+		scale: 1.05;
+		@include m.increasedShadow();
+
+		.recipe-card__image {
+			scale: 1.1;
+		}
+	}
+}

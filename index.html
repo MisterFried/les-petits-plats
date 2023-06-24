@@ -29,19 +29,23 @@
 			<img src="/images/les-petits-plats.png" class="header__logo" alt="Logo les petits plats" />
 			<h1 class="header__title">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
 			<form class="header__searchbar">
-				<input
-					type="texte"
-					class="header__input"
-					placeholder="Rechercher une recette, un ingrédient, ..." />
+				<input type="texte" class="header__input" placeholder="Rechercher une recette, un ingrédient, ..." />
 				<button type="button" class="header__button">
 					<svg viewBox="0 0 28 28" id="search-icon">
 						<g id="search-icon__content">
-							<circle cx="10" cy="10" r="9.5" fill="none"/>
+							<circle cx="10" cy="10" r="9.5" fill="none" />
 							<line x1="18.3536" y1="18.6464" x2="27.3536" y2="27.6464" />
 						</g>
 					</svg>
 				</button>
 			</form>
 		</header>
+
+		<main>
+			<section class="filter"></section>
+			<section class="recipes"></section>
+		</main>
+
+		<script src="/src/ts/displayRecipes.ts" type="module"></script>
 	</body>
 </html>
