@@ -1,16 +1,18 @@
 import { Recipe, fetchRecipes } from "./fetchData";
 
-const recipes = await fetchRecipes();
-
-if (recipes) {
-	const recipesSection = document.querySelector(".recipes");
-
-	recipes.forEach((recipe) => {
-		const recipeCard = createRecipeCard(recipe);
-		recipesSection?.appendChild(recipeCard);
-	});
-} else {
-	console.error("Error : recipes undefined");
+async function displayRecipes() {
+	const recipes = await fetchRecipes();
+	
+	if (recipes) {
+		const recipesSection = document.querySelector(".recipes");
+	
+		recipes.forEach((recipe) => {
+			const recipeCard = createRecipeCard(recipe);
+			recipesSection?.appendChild(recipeCard);
+		});
+	} else {
+		console.error("Error : recipes undefined");
+	}
 }
 
 function createRecipeCard(recipe: Recipe) {
@@ -75,3 +77,5 @@ function createRecipeCard(recipe: Recipe) {
 
 	return recipeCard;
 }
+
+displayRecipes();
