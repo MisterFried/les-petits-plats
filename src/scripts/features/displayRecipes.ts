@@ -1,21 +1,21 @@
-import { fetchRecipes } from "./API/fetchData";
-import { Recipe } from "./interfaces/interfaces";
+import { Recipe } from "../interfaces/interfaces";
 
-async function displayRecipes() {
-	const recipes = await fetchRecipes();
+// * Display all the recipes
+export function displayRecipes(recipesList: Array<Recipe>) {
+	const recipesSection = document.querySelector(".recipes");
 
-	if (recipes) {
-		const recipesSection = document.querySelector(".recipes");
-
-		recipes.forEach(recipe => {
-			const recipeCard = createRecipeCard(recipe);
-			recipesSection?.appendChild(recipeCard);
-		});
-	} else {
-		console.error("Error : recipes undefined");
+	// * Clear the previous recipes before displaying new ones
+	while (recipesSection?.firstChild) {
+		recipesSection.firstChild.remove();
 	}
+
+	recipesList.forEach(recipe => {
+		const recipeCard = createRecipeCard(recipe);
+		recipesSection?.appendChild(recipeCard);
+	});
 }
 
+// * Create an "article" element containing the recipe and returns it
 function createRecipeCard(recipe: Recipe) {
 	const recipeCard = document.createElement("article");
 	recipeCard.classList.add("recipe-card");
@@ -78,5 +78,3 @@ function createRecipeCard(recipe: Recipe) {
 
 	return recipeCard;
 }
-
-displayRecipes();
