@@ -74,6 +74,12 @@
 	}
 }
 
+.filter {
+	@include m.flexbox(row, 2rem, wrap, start, center);
+
+	padding: 2rem;
+}
+
 .recipes {
 	@include m.flexbox(row, 3rem, wrap, center, normal);
 

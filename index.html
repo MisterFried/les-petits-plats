@@ -32,7 +32,7 @@
 			<h1 class="header__title">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
 			<form class="header__searchbar">
 				<input
-					type="texte"
+					type="text"
 					class="header__input"
 					placeholder="Rechercher une recette, un ingrédient, ..."
 					id="header__input"
@@ -49,7 +49,33 @@
 		</header>
 
 		<main>
-			<section class="filter"></section>
+			<section class="filter">
+				<div class="dropdown-menu">
+					<button class="dropdown-button">Ingrédients</button>
+					<svg width="15" height="8" viewBox="0 0 15 8" fill="none" class="dropdown-arrow">
+						<path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round" />
+					</svg>
+					<ul class="dropdown-content">
+						<li>Tomate</li>
+						<li>Fromage</li>
+						<li>Chocolat</li>
+						<li>Pommes</li>
+						<li>Thon</li>
+					</ul>
+				</div>
+				<div class="dropdown-menu">
+					<button class="dropdown-button">Ustensils</button>
+					<svg width="15" height="8" viewBox="0 0 15 8" fill="none" class="dropdown-arrow">
+						<path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round" />
+					</svg>
+					<ul class="dropdown-content">
+						<li>Four</li>
+						<li>Micro-onde</li>
+						<li>Fouet</li>
+						<li>Robot</li>
+					</ul>
+				</div>
+			</section>
 			<section class="recipes"></section>
 		</main>
 

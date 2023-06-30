@@ -9,6 +9,12 @@ export function displayRecipes(recipesList: Array<Recipe>) {
 		recipesSection.firstChild.remove();
 	}
 
+	if (recipesList.length === 0) {
+		const message = document.createElement("span");
+		message.innerText = "Aucune recette correspondante !";
+		recipesSection?.appendChild(message);
+	}
+
 	recipesList.forEach(recipe => {
 		const recipeCard = createRecipeCard(recipe);
 		recipesSection?.appendChild(recipeCard);

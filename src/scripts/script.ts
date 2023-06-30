@@ -1,5 +1,6 @@
 import { fetchRecipes } from "./API/fetchData";
 import { displayRecipes } from "./features/displayRecipes";
+import { dropdown } from "./features/dropdown";
 import { searchFunction } from "./features/searchFunction";
 
 async function pageInitialization() {
@@ -15,3 +16,4 @@ async function pageInitialization() {
 }
 
 pageInitialization();
+dropdown();
