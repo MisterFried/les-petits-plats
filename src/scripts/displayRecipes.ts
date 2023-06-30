@@ -1,12 +1,13 @@
-import { Recipe, fetchRecipes } from "./fetchData";
+import { fetchRecipes } from "./API/fetchData";
+import { Recipe } from "./interfaces/interfaces";
 
 async function displayRecipes() {
 	const recipes = await fetchRecipes();
-	
+
 	if (recipes) {
 		const recipesSection = document.querySelector(".recipes");
-	
-		recipes.forEach((recipe) => {
+
+		recipes.forEach(recipe => {
 			const recipeCard = createRecipeCard(recipe);
 			recipesSection?.appendChild(recipeCard);
 		});
@@ -44,12 +45,12 @@ function createRecipeCard(recipe: Recipe) {
 	ingredientText.innerText = "INGRÉDIENTS";
 	ingredientText.classList.add("recipe-card__ingredient-text");
 
-	const recipeIngredientsContainer = document.createElement("div");
+	const recipeIngredientsContainer = document.createElement("ul");
 	recipeIngredientsContainer.append(ingredientText);
 	recipeIngredientsContainer.classList.add("recipe-card__ingredients-container");
 
-	recipe.ingredients.forEach((ingredient) => {
-		const ingredientContainer = document.createElement("div");
+	recipe.ingredients.forEach(ingredient => {
+		const ingredientContainer = document.createElement("li");
 		ingredientContainer.classList.add("recipe-card__ingredient-container");
 
 		const ingredientName = document.createElement("span");

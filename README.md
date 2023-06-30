@@ -4,13 +4,11 @@ Ce projet vise à créer un site web de recettes de cuisine similaire à Marmito
 
 La priorité est de développer une fonctionnalité de recherche performante, offrant des résultats rapides et presque instantanés pour les utilisateurs. Le travail réalisé sera ensuite transmis à l'équipe Back-End pour adaptation. Il est donc nécessaire de fournir une documentation claire sur le travail effectué pour faciliter cette transition.
 
-
 ## 🚀 Tech Stack
 
 **Client:** HTML / SCSS / TypeScript
 
 **Build Tool:** Vite
-
 
 ## 🏃‍♂️ Run Locally
 
@@ -37,4 +35,3 @@ Start the server
 ```bash
   npm run dev
 ```
-
