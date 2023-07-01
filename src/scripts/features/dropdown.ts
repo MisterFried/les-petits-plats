@@ -1,6 +1,6 @@
 import { Recipe } from "../interfaces/interfaces";
 
-// * Custom dropdown buttons
+// * Custom dropdown buttons with keyboard navigation (tab)
 export function dropdown() {
 	document.addEventListener("click", event => {
 		const target = event.target;
@@ -16,19 +16,34 @@ export function dropdown() {
 				const currentDropdown = target.closest(".dropdown-menu");
 				const dropdownList = Array.from(document.querySelectorAll(".dropdown-menu"));
 				dropdownList.forEach(dropdown => {
-					if (dropdown === currentDropdown) {
-						return;
+					if (dropdown != currentDropdown) {
+						// close the other dropdown
+						dropdown.classList.remove("open");
+						if (dropdown.firstElementChild) {
+							KeyboardNav(dropdown.firstElementChild, false);
+						}
+					} else {
+						// open / close the clicked dropdown
+						if (currentDropdown.classList.contains("open")) {
+							currentDropdown.classList.remove("open");
+							KeyboardNav(target, false);
+						} else {
+							currentDropdown.classList.add("open");
+							KeyboardNav(target, true);
+						}
 					}
-					dropdown.classList.remove("open");
 				});
-				const dropdownMenu = target.closest(".dropdown-menu");
-				dropdownMenu?.classList.toggle("open");
 			}
 
 			// * If clicked outside of a dropdown -> close all the dropdown
 			if (!target.matches(".dropdown-button")) {
 				const dropdownList = Array.from(document.querySelectorAll(".dropdown-menu"));
-				dropdownList.forEach(dropdown => dropdown.classList.remove("open"));
+				dropdownList.forEach(dropdown => {
+					dropdown.classList.remove("open");
+					if (dropdown.firstElementChild) {
+						KeyboardNav(dropdown.firstElementChild, false);
+					}
+				});
 			}
 		}
 	});
@@ -89,13 +104,27 @@ export function fillDropdown(recipesList: Array<Recipe>) {
 	});
 }
 
+// * Clear all the previous elements inside the dropdown
 export function clearDropdown() {
-	const dropdowns = Array.from(
-		document.querySelectorAll("#ingredients-dropdown-list, #appliance-dropdown-list, #ustensils-dropdown-list")
-	);
+	const dropdowns = Array.from(document.querySelectorAll(".dropdown-content"));
 	dropdowns.forEach(dropdown => {
-		while (dropdown.firstChild) {
-			dropdown.firstChild.remove();
+		while (dropdown.firstElementChild) {
+			dropdown.firstElementChild.remove();
 		}
 	});
+}
+
+// * Enable / Disable keyboard navigation
+function KeyboardNav(target: Element, state: boolean) {
+	const dropdownList = target.nextElementSibling?.nextElementSibling;
+	const dropdownElementsHTMLCollection = dropdownList?.children;
+	if (dropdownElementsHTMLCollection) {
+		const dropdownElements = [...dropdownList.children];
+		if (state) {
+			dropdownElements.forEach(element => element.setAttribute("tabIndex", "0"));
+		} else {
+			console.log("test");
+			dropdownElements.forEach(element => element.setAttribute("tabIndex", "-1"));
+		}
+	}
 }
