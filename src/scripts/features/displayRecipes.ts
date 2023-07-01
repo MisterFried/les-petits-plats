@@ -1,4 +1,5 @@
 import { Recipe } from "../interfaces/interfaces";
+import { clearDropdown, fillDropdown } from "./dropdown";
 
 // * Display all the recipes
 export function displayRecipes(recipesList: Array<Recipe>) {
@@ -19,6 +20,9 @@ export function displayRecipes(recipesList: Array<Recipe>) {
 		const recipeCard = createRecipeCard(recipe);
 		recipesSection?.appendChild(recipeCard);
 	});
+
+	clearDropdown();
+	fillDropdown(recipesList);
 }
 
 // * Create an "article" element containing the recipe and returns it
