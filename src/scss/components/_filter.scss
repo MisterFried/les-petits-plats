@@ -1,0 +1,21 @@
+.active-filter {
+	position: relative;
+
+	padding: 0.5rem 3rem 0.5rem 1rem;
+	border-radius: 0.5rem;
+
+	background-color: var(--clr-primary);
+
+	&__delete {
+		position: absolute;
+		inset: 50% 1rem auto auto;
+		translate: 0 -50%;
+		scale: 1.2;
+
+		transition: all 0.2s ease-in-out;
+
+		&:hover {
+			scale: 1.5;
+		}
+	}
+}

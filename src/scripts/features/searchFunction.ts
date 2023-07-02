@@ -36,14 +36,16 @@ export function searchFunction(recipesList: Array<Recipe>) {
 				}
 			});
 			displayRecipes(filteredRecipesList); // update with filtered recipes
+		} else {
+			displayRecipes(recipesList);
 		}
 	});
+}
 
-	// * normalize the string (remove accent - everything to lower case)
-	function normalizeString(string: string) {
-		return string
-			.toLowerCase()
-			.normalize("NFD")
-			.replace(/[\u0300-\u036f]/g, "");
-	}
+// * normalize the string (remove accent - everything to lower case)
+export function normalizeString(string: string) {
+	return string
+		.toLowerCase()
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "");
 }

@@ -1,4 +1,5 @@
 import { Recipe } from "../interfaces/interfaces";
+import { normalizeString } from "./searchFunction";
 
 // * Custom dropdown buttons with keyboard navigation (tab)
 export function dropdown() {
@@ -57,6 +58,7 @@ export function fillDropdown(recipesList: Array<Recipe>) {
 	const ingredientsList: Array<string> = [];
 	const applianceList: Array<string> = [];
 	const ustensilsList: Array<string> = [];
+	const filterList: Array<string> = [];
 
 	// * Get all the different ingredients from the currently displayed recipes
 	recipesList.forEach(recipe => {
@@ -87,20 +89,23 @@ export function fillDropdown(recipesList: Array<Recipe>) {
 	ustensilsList.sort();
 
 	// * Fill each dropdown list with its corresponding elements
-	ustensilsList.forEach(ustensil => {
+	ingredientsList.forEach(ingredient => {
 		const element = document.createElement("li");
-		element.innerText = ustensil;
-		ustensilsDropdown?.appendChild(element);
+		element.innerText = ingredient;
+		ingredientsDropdown?.appendChild(element);
+		selectFilter(element, filterList, recipesList);
 	});
 	applianceList.forEach(appliance => {
 		const element = document.createElement("li");
 		element.innerText = appliance;
 		applianceDropdown?.appendChild(element);
+		selectFilter(element, filterList, recipesList);
 	});
-	ingredientsList.forEach(ingredient => {
+	ustensilsList.forEach(ustensil => {
 		const element = document.createElement("li");
-		element.innerText = ingredient;
-		ingredientsDropdown?.appendChild(element);
+		element.innerText = ustensil;
+		ustensilsDropdown?.appendChild(element);
+		selectFilter(element, filterList, recipesList);
 	});
 }
 
@@ -123,8 +128,45 @@ function KeyboardNav(target: Element, state: boolean) {
 		if (state) {
 			dropdownElements.forEach(element => element.setAttribute("tabIndex", "0"));
 		} else {
-			console.log("test");
 			dropdownElements.forEach(element => element.setAttribute("tabIndex", "-1"));
 		}
 	}
+}
+
+// * Add the clicked element to the list of filter for the recipes
+function selectFilter(filter: HTMLElement, filterList: Array<string>, recipesList: Array<Recipe>) {
+	const activeFilterContainer = document.querySelector(".filter__active-filter-container");
+
+	filter.addEventListener("click", () => {
+		const filterName = filter.innerText;
+		const normalizedFilterName = normalizeString(filterName).replace(/\s/g, "-"); // Normalize without space and accent
+
+		if (!filterList.includes(filterName)) {
+			// If the filter is not already selected
+			const filterElement = document.createElement("span"); // Create the filter tag
+			filterElement.innerHTML = `${filterName}
+							<svg width="14" height="13" viewBox="0 0 14 13" fill="none" class="active-filter__delete" tabindex="0" id="${normalizedFilterName}-filter">
+								<path
+									d="M12 11.5L7 6.5M7 6.5L2 1.5M7 6.5L12 1.5M7 6.5L2 11.5"
+									stroke="#1B1B1B"
+									stroke-width="2.16667"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/></svg>`;
+			filterElement.classList.add("active-filter");
+			activeFilterContainer?.appendChild(filterElement);
+			filterList.push(filterName);
+
+			const closeIcon = document.querySelector(`#${normalizedFilterName}-filter`); // Event listener to remove the filter
+			closeIcon?.addEventListener("click", () => {
+				closeIcon.parentElement?.remove();
+			});
+		} else {
+			// If clicked again in the dropdown, remove the filter
+			const closeIcon = document.querySelector(`#${normalizedFilterName}-filter`);
+			closeIcon?.parentElement?.remove();
+			filterList.splice(filterList.indexOf(filterName), 1);
+		}
+		console.log(recipesList);
+	});
 }

@@ -75,9 +75,17 @@
 }
 
 .filter {
-	@include m.flexbox(row, 2rem, wrap, start, center);
+	@include m.flexbox(column, 2rem, nowrap, start, start);
 
 	padding: 2rem;
+
+	&__dropdown-container {
+		@include m.flexbox(row, 2rem, wrap, start, center);
+	}
+
+	&__active-filter-container {
+		@include m.flexbox(row, 1rem, wrap, start, center);
+	}
 }
 
 .recipes {
