@@ -39,19 +39,6 @@
 		background-color: transparent;
 	}
 
-	&__reset-search {
-		scale: 1.5;
-		opacity: 0.4;
-
-		transition: all 0.2s ease-in-out;
-
-		&:hover,
-		&:focus {
-			scale: 1.7;
-			opacity: 0.8;
-		}
-	}
-
 	&__button {
 		@include m.flexbox();
 		border: none;

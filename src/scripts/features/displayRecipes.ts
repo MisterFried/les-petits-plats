@@ -1,12 +1,17 @@
 import { FilterList, Recipe } from "../interfaces/interfaces";
 import { clearDropdown, fillDropdown } from "./dropdown";
 
-// * Display all the recipes
+/*
+Clear all the previously displayed recipes and update with the one contained
+in the recipesList.
+If it's the first time displaying or updating after a word search by the user
+save the content of the RecipesList in initialRecipesList
+*/
 export function displayRecipes(
 	recipesList: Array<Recipe>,
 	filterList: FilterList,
-	firstDisplay: boolean,
-	initialSearchedRecipesList: Array<Recipe>
+	saveInitialRecipesList: boolean,
+	initialRecipesList: Array<Recipe>
 ) {
 	const recipesSection = document.querySelector(".recipes");
 	const recipesNumber = document.querySelector(".filter__recipes-number") as HTMLSpanElement;
@@ -23,21 +28,24 @@ export function displayRecipes(
 		recipesSection?.appendChild(message);
 	}
 
+	if (saveInitialRecipesList) {
+		initialRecipesList = recipesList;
+	}
+
 	// * Display recipes
 	recipesList.forEach(recipe => {
 		const recipeCard = createRecipeCard(recipe);
 		recipesSection?.appendChild(recipeCard);
 	});
 
-	recipesList.length === 1 // Number of recipes indicator
+	// * Number of recipes indicator
+	recipesList.length === 1
 		? (recipesNumber.innerText = `${recipesList.length} Recette`)
 		: (recipesNumber.innerText = `${recipesList.length} Recettes`);
 
+	// * Update the content of the dropdown menus to correspond to the remaining displayed recipes
 	clearDropdown();
-	if (firstDisplay) {
-		initialSearchedRecipesList = recipesList;
-	}
-	fillDropdown(recipesList, filterList, initialSearchedRecipesList);
+	fillDropdown(recipesList, filterList, initialRecipesList);
 }
 
 // * Create an "article" element containing the recipe and returns it
