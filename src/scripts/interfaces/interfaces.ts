@@ -15,3 +15,9 @@ export interface Ingredient {
 	quantity?: number;
 	unit?: string;
 }
+
+export interface FilterList {
+	ingredients: Array<string>;
+	appliance: Array<string>;
+	ustensils: Array<string>;
+}

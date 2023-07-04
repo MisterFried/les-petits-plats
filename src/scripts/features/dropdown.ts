@@ -1,5 +1,6 @@
-import { Recipe } from "../interfaces/interfaces";
-import { normalizeString } from "./searchFunction";
+import { FilterList, Recipe } from "../interfaces/interfaces";
+import { displayRecipes } from "./displayRecipes";
+import { filterRecipes, normalizeString } from "./searchFilter";
 
 // * Custom dropdown buttons with keyboard navigation (tab)
 export function dropdown() {
@@ -48,20 +49,26 @@ export function dropdown() {
 			}
 		}
 	});
+
+	const resetButton = document.querySelector(".filter__reset");
+	resetButton?.addEventListener("click", () => location.reload());
 }
 
 // * Fill the dropdown menus with the corresponding ingredients / ustensils / appliance
-export function fillDropdown(recipesList: Array<Recipe>) {
+export function fillDropdown(
+	searchedRecipesList: Array<Recipe>,
+	filterList: FilterList,
+	initialSearchedRecipesList: Array<Recipe>
+) {
 	const ingredientsDropdown = document.querySelector("#ingredients-dropdown-list");
 	const applianceDropdown = document.querySelector("#appliance-dropdown-list");
 	const ustensilsDropdown = document.querySelector("#ustensils-dropdown-list");
 	const ingredientsList: Array<string> = [];
 	const applianceList: Array<string> = [];
 	const ustensilsList: Array<string> = [];
-	const filterList: Array<string> = [];
 
 	// * Get all the different ingredients from the currently displayed recipes
-	recipesList.forEach(recipe => {
+	searchedRecipesList.forEach(recipe => {
 		if (recipe.ingredients.length > 0) {
 			recipe.ingredients.forEach(ingredient => {
 				if (!ingredientsList.includes(ingredient.ingredient)) {
@@ -93,19 +100,19 @@ export function fillDropdown(recipesList: Array<Recipe>) {
 		const element = document.createElement("li");
 		element.innerText = ingredient;
 		ingredientsDropdown?.appendChild(element);
-		selectFilter(element, filterList, recipesList);
+		selectFilter(element, "ingredients", filterList, searchedRecipesList, initialSearchedRecipesList);
 	});
 	applianceList.forEach(appliance => {
 		const element = document.createElement("li");
 		element.innerText = appliance;
 		applianceDropdown?.appendChild(element);
-		selectFilter(element, filterList, recipesList);
+		selectFilter(element, "appliance", filterList, searchedRecipesList, initialSearchedRecipesList);
 	});
 	ustensilsList.forEach(ustensil => {
 		const element = document.createElement("li");
 		element.innerText = ustensil;
 		ustensilsDropdown?.appendChild(element);
-		selectFilter(element, filterList, recipesList);
+		selectFilter(element, "ustensils", filterList, searchedRecipesList, initialSearchedRecipesList);
 	});
 }
 
@@ -119,6 +126,17 @@ export function clearDropdown() {
 	});
 }
 
+export function clearTags(filterList: FilterList) {
+	const tagSection = document.querySelector(".filter__active-filter-container");
+	while (tagSection?.firstElementChild) {
+		tagSection.firstElementChild.remove();
+	}
+	filterList.ingredients = [];
+	filterList.appliance = [];
+	filterList.ustensils = [];
+}
+
+// TODO ADD THE EVENT LISTENER WHEN PRESSING ENTER OR CHANGE THE ELEMENTS TO BUTTONS INSTEAD OF LI
 // * Enable / Disable keyboard navigation
 function KeyboardNav(target: Element, state: boolean) {
 	const dropdownList = target.nextElementSibling?.nextElementSibling;
@@ -133,15 +151,21 @@ function KeyboardNav(target: Element, state: boolean) {
 	}
 }
 
-// * Add the clicked element to the list of filter for the recipes
-function selectFilter(filter: HTMLElement, filterList: Array<string>, recipesList: Array<Recipe>) {
+// * Event listener to add the clicked element to the list of active filters for the recipes
+function selectFilter(
+	filter: HTMLElement,
+	category: string,
+	filterList: FilterList,
+	searchedRecipesList: Array<Recipe>,
+	initialSearchedRecipesList: Array<Recipe>
+) {
 	const activeFilterContainer = document.querySelector(".filter__active-filter-container");
 
 	filter.addEventListener("click", () => {
 		const filterName = filter.innerText;
-		const normalizedFilterName = normalizeString(filterName).replace(/\s/g, "-"); // Normalize without space and accent
+		const normalizedFilterName = normalizeString(filterName).replace("'", " ").replace(/\s/g, "-"); // Normalize without space and accent
 
-		if (!filterList.includes(filterName)) {
+		if (!filterList[category as keyof typeof filterList].includes(filterName)) {
 			// If the filter is not already selected
 			const filterElement = document.createElement("span"); // Create the filter tag
 			filterElement.innerHTML = `${filterName}
@@ -155,18 +179,31 @@ function selectFilter(filter: HTMLElement, filterList: Array<string>, recipesLis
 								/></svg>`;
 			filterElement.classList.add("active-filter");
 			activeFilterContainer?.appendChild(filterElement);
-			filterList.push(filterName);
+			filterList[category as keyof typeof filterList].push(filterName);
+			const filteredRecipesList = filterRecipes(searchedRecipesList, filterList);
+			displayRecipes(filteredRecipesList, filterList, false, initialSearchedRecipesList);
 
-			const closeIcon = document.querySelector(`#${normalizedFilterName}-filter`); // Event listener to remove the filter
+			// * Event listener on the remove filter / tag icon
+			const closeIcon = document.querySelector(`#${normalizedFilterName}-filter`);
 			closeIcon?.addEventListener("click", () => {
 				closeIcon.parentElement?.remove();
+				filterList[category as keyof typeof filterList].splice(
+					filterList[category as keyof typeof filterList].indexOf(filterName),
+					1
+				);
+				const filteredRecipesList = filterRecipes(initialSearchedRecipesList, filterList);
+				displayRecipes(filteredRecipesList, filterList, false, initialSearchedRecipesList);
 			});
 		} else {
-			// If clicked again in the dropdown, remove the filter
+			// * If clicked again in the dropdown, remove the filter
 			const closeIcon = document.querySelector(`#${normalizedFilterName}-filter`);
 			closeIcon?.parentElement?.remove();
-			filterList.splice(filterList.indexOf(filterName), 1);
+			filterList[category as keyof typeof filterList].splice(
+				filterList[category as keyof typeof filterList].indexOf(filterName),
+				1
+			);
+			const filteredRecipesList = filterRecipes(initialSearchedRecipesList, filterList);
+			displayRecipes(filteredRecipesList, filterList, false, initialSearchedRecipesList);
 		}
-		console.log(recipesList);
 	});
 }

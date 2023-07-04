@@ -2,6 +2,7 @@
 
 .recipe-card {
 	@include m.flexbox(column, 0, nowrap, normal, center);
+	position: relative;
 
 	width: min(380px, 100%);
 	border-radius: 0.5rem;
@@ -58,6 +59,16 @@
 		@include m.flexbox(column);
 
 		margin-bottom: 0.5rem;
+	}
+
+	&__duration {
+		position: absolute;
+		inset: 1rem 1rem auto auto;
+
+		padding: 0.25rem 0.75rem;
+		border-radius: 5rem;
+
+		background-color: var(--clr-primary);
 	}
 
 	&:hover,

@@ -1,28 +1,43 @@
-import { Recipe } from "../interfaces/interfaces";
+import { FilterList, Recipe } from "../interfaces/interfaces";
 import { clearDropdown, fillDropdown } from "./dropdown";
 
 // * Display all the recipes
-export function displayRecipes(recipesList: Array<Recipe>) {
+export function displayRecipes(
+	recipesList: Array<Recipe>,
+	filterList: FilterList,
+	firstDisplay: boolean,
+	initialSearchedRecipesList: Array<Recipe>
+) {
 	const recipesSection = document.querySelector(".recipes");
+	const recipesNumber = document.querySelector(".filter__recipes-number") as HTMLSpanElement;
 
 	// * Clear the previous recipes before displaying new ones
 	while (recipesSection?.firstChild) {
 		recipesSection.firstChild.remove();
 	}
 
+	// * Message if no recipes corresponds to the research
 	if (recipesList.length === 0) {
 		const message = document.createElement("span");
 		message.innerText = "Aucune recette correspondante !";
 		recipesSection?.appendChild(message);
 	}
 
+	// * Display recipes
 	recipesList.forEach(recipe => {
 		const recipeCard = createRecipeCard(recipe);
 		recipesSection?.appendChild(recipeCard);
 	});
 
+	recipesList.length === 1 // Number of recipes indicator
+		? (recipesNumber.innerText = `${recipesList.length} Recette`)
+		: (recipesNumber.innerText = `${recipesList.length} Recettes`);
+
 	clearDropdown();
-	fillDropdown(recipesList);
+	if (firstDisplay) {
+		initialSearchedRecipesList = recipesList;
+	}
+	fillDropdown(recipesList, filterList, initialSearchedRecipesList);
 }
 
 // * Create an "article" element containing the recipe and returns it
@@ -34,6 +49,10 @@ function createRecipeCard(recipe: Recipe) {
 	const recipeImage = document.createElement("img");
 	recipeImage.src = `/images/recettes/${recipe.image}`;
 	recipeImage.classList.add("recipe-card__image");
+
+	const recipeDuration = document.createElement("span");
+	recipeDuration.classList.add("recipe-card__duration");
+	recipeDuration.innerText = `${recipe.time} min`;
 
 	const recipeName = document.createElement("h3");
 	recipeName.innerText = recipe.name;
@@ -81,7 +100,7 @@ function createRecipeCard(recipe: Recipe) {
 	});
 
 	const recipeTextContent = document.createElement("div");
-	recipeTextContent.append(recipeName, recipeDescriptionContainer, recipeIngredientsContainer);
+	recipeTextContent.append(recipeName, recipeDescriptionContainer, recipeIngredientsContainer, recipeDuration);
 	recipeTextContent.classList.add("recipe-card__text-content");
 
 	recipeCard.append(recipeImage, recipeTextContent);

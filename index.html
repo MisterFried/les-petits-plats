@@ -37,6 +37,15 @@
 					placeholder="Rechercher une recette, un ingrédient, ..."
 					id="header__input"
 				/>
+				<svg width="14" height="13" viewBox="0 0 14 13" fill="none" class="header__reset-search" tabindex="0">
+					<path
+						d="M12 11.5L7 6.5M7 6.5L2 1.5M7 6.5L12 1.5M7 6.5L2 11.5"
+						stroke="#1B1B1B"
+						stroke-width="2.16667"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
 				<button type="button" class="header__button">
 					<svg viewBox="0 0 28 28" id="search-icon">
 						<g id="search-icon__content">
@@ -72,7 +81,9 @@
 						</svg>
 						<ul class="dropdown-content" id="ustensils-dropdown-list"></ul>
 					</div>
+					<button class="filter__reset">Réinitialiser</button>
 				</div>
+				<span class="filter__recipes-number">1500 Recettes</span>
 				<div class="filter__active-filter-container"></div>
 			</section>
 			<section class="recipes"></section>

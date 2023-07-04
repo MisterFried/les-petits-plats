@@ -21,7 +21,7 @@
 	}
 
 	&__searchbar {
-		@include m.flexbox(row, 1rem, nowrap, center);
+		@include m.flexbox(row, 1rem, nowrap, start, center);
 
 		width: min(80ch, 100%);
 		padding: 0.5rem;
@@ -32,10 +32,24 @@
 
 	&__input {
 		width: 100%;
+		height: 100%;
 		padding-inline: 0.5rem;
 		border: none;
 
 		background-color: transparent;
+	}
+
+	&__reset-search {
+		scale: 1.5;
+		opacity: 0.4;
+
+		transition: all 0.2s ease-in-out;
+
+		&:hover,
+		&:focus {
+			scale: 1.7;
+			opacity: 0.8;
+		}
 	}
 
 	&__button {
@@ -75,16 +89,34 @@
 }
 
 .filter {
-	@include m.flexbox(column, 2rem, nowrap, start, start);
+	@include m.flexbox(row, 2rem, wrap, space-between, start);
 
 	padding: 2rem;
 
 	&__dropdown-container {
-		@include m.flexbox(row, 2rem, wrap, start, center);
+		@include m.flexbox(row, 1rem, wrap, start, center);
 	}
 
 	&__active-filter-container {
 		@include m.flexbox(row, 1rem, wrap, start, center);
+
+		width: 100%;
+	}
+
+	&__reset {
+		padding: 0.5rem 1rem;
+		border-radius: 0.5rem;
+		border: none;
+
+		background-color: var(--clr-white);
+
+		cursor: pointer;
+
+		transition: all 0.2s ease-in-out;
+
+		&:hover {
+			background-color: var(--clr-primary);
+		}
 	}
 }
 
