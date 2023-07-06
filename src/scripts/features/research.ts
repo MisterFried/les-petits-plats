@@ -11,7 +11,7 @@ Research is based on recipe's name / description / ingredients
 */
 export function searchRecipes(recipesList: Array<Recipe>, filterList: FilterList) {
 	const searchInputElement = document.querySelector("#header__input") as HTMLInputElement;
-	const resetSearchElement = document.querySelector(".header__reset-search");
+	const resetSearchElement = document.querySelector(".header__reset-button");
 
 	searchInputElement?.addEventListener("input", () => {
 		clearTags(filterList); // Reset the filter when changing the search input
@@ -42,7 +42,8 @@ export function searchRecipes(recipesList: Array<Recipe>, filterList: FilterList
 	});
 
 	// * Reset the text input
-	resetSearchElement?.addEventListener("click", () => {
+	resetSearchElement?.addEventListener("click", event => {
+		event.preventDefault();
 		searchInputElement.value = "";
 		clearTags(filterList);
 		displayRecipes(recipesList, filterList, true, recipesList);

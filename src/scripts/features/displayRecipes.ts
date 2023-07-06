@@ -56,17 +56,18 @@ function createRecipeCard(recipe: Recipe) {
 
 	const recipeImage = document.createElement("img");
 	recipeImage.src = `/images/recettes/${recipe.image}`;
+	recipeImage.alt = `Photo de la recette ${recipe.name}`;
 	recipeImage.classList.add("recipe-card__image");
 
 	const recipeDuration = document.createElement("span");
 	recipeDuration.classList.add("recipe-card__duration");
 	recipeDuration.innerText = `${recipe.time} min`;
 
-	const recipeName = document.createElement("h3");
+	const recipeName = document.createElement("h2");
 	recipeName.innerText = recipe.name;
 	recipeName.classList.add("recipe-card__name");
 
-	const recipeText = document.createElement("h4");
+	const recipeText = document.createElement("h3");
 	recipeText.innerText = "RECETTE";
 	recipeText.classList.add("recipe-card__recipe-text");
 
@@ -78,7 +79,7 @@ function createRecipeCard(recipe: Recipe) {
 	recipeDescriptionContainer.append(recipeText, recipeDescription);
 	recipeDescriptionContainer.classList.add("recipe-card__description-container");
 
-	const ingredientText = document.createElement("h4");
+	const ingredientText = document.createElement("li");
 	ingredientText.innerText = "INGRÉDIENTS";
 	ingredientText.classList.add("recipe-card__ingredient-text");
 

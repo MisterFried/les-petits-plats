@@ -1,3 +1,5 @@
+@use "../abstracts/mixins" as m;
+
 .active-filter {
 	position: relative;
 
@@ -10,11 +12,16 @@
 		position: absolute;
 		inset: 50% 1rem auto auto;
 		translate: 0 -50%;
+		@include m.flexbox(row, 0, nowrap, center, center);
+
 		scale: 1.2;
+		border: none;
+		background-color: transparent;
 
 		transition: all 0.2s ease-in-out;
 
-		&:hover {
+		&:hover,
+		&:focus {
 			scale: 1.5;
 		}
 	}

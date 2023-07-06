@@ -39,6 +39,26 @@
 		background-color: transparent;
 	}
 
+	&__reset-button {
+		@include m.flexbox(row, 0rem, nowrap, center, center);
+
+		border: none;
+		background-color: transparent;
+
+		&:hover .header__reset-icon,
+		&:focus .header__reset-icon {
+			scale: 1.8;
+			opacity: 0.9;
+		}
+	}
+
+	&__reset-icon {
+		scale: 1.5;
+		opacity: 0.5;
+
+		transition: all 0.2s ease-in-out;
+	}
+
 	&__button {
 		@include m.flexbox();
 		border: none;

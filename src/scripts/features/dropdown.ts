@@ -85,22 +85,28 @@ export function fillDropdown(RecipesList: Array<Recipe>, filterList: FilterList,
 
 	// * Fill each dropdown list with its corresponding elements and add the event listener on click
 	ingredientsList.forEach(ingredient => {
-		const element = document.createElement("li");
-		element.innerText = ingredient;
-		ingredientsDropdown?.appendChild(element);
-		selectFilter(element, "ingredients", filterList, RecipesList, initialRecipesList);
+		const liElement = document.createElement("li");
+		const buttonElement = document.createElement("button");
+		buttonElement.innerText = ingredient;
+		liElement.appendChild(buttonElement);
+		ingredientsDropdown?.appendChild(liElement);
+		selectFilter(buttonElement, "ingredients", filterList, RecipesList, initialRecipesList);
 	});
 	applianceList.forEach(appliance => {
-		const element = document.createElement("li");
-		element.innerText = appliance;
-		applianceDropdown?.appendChild(element);
-		selectFilter(element, "appliance", filterList, RecipesList, initialRecipesList);
+		const liElement = document.createElement("li");
+		const buttonElement = document.createElement("button");
+		buttonElement.innerText = appliance;
+		liElement.appendChild(buttonElement);
+		applianceDropdown?.appendChild(liElement);
+		selectFilter(buttonElement, "appliance", filterList, RecipesList, initialRecipesList);
 	});
 	ustensilsList.forEach(ustensil => {
-		const element = document.createElement("li");
-		element.innerText = ustensil;
-		ustensilsDropdown?.appendChild(element);
-		selectFilter(element, "ustensils", filterList, RecipesList, initialRecipesList);
+		const liElement = document.createElement("li");
+		const buttonElement = document.createElement("button");
+		buttonElement.innerText = ustensil;
+		liElement.appendChild(buttonElement);
+		ustensilsDropdown?.appendChild(liElement);
+		selectFilter(buttonElement, "ustensils", filterList, RecipesList, initialRecipesList);
 	});
 }
 
@@ -133,8 +139,8 @@ function KeyboardNav(target: Element, state: boolean) {
 	if (dropdownElementsHTMLCollection) {
 		const dropdownElements = [...dropdownList.children];
 		state
-			? dropdownElements.forEach(element => element.setAttribute("tabIndex", "0"))
-			: dropdownElements.forEach(element => element.setAttribute("tabIndex", "-1"));
+			? dropdownElements.forEach(element => element.firstElementChild?.setAttribute("tabIndex", "0"))
+			: dropdownElements.forEach(element => element.firstElementChild?.setAttribute("tabIndex", "-1"));
 	}
 }
 
@@ -160,14 +166,16 @@ function selectFilter(
 			// Create the tag element
 			const filterElement = document.createElement("span");
 			filterElement.innerHTML = `${filterName}
-							<svg width="14" height="13" viewBox="0 0 14 13" fill="none" class="active-filter__delete" tabindex="0" id="${normalizedFilterName}-filter">
+							<button class="active-filter__delete" id="${normalizedFilterName}-filter">
+								<svg width="14" height="13" viewBox="0 0 14 13" fill="none">
 								<path
 									d="M12 11.5L7 6.5M7 6.5L2 1.5M7 6.5L12 1.5M7 6.5L2 11.5"
 									stroke="#1B1B1B"
 									stroke-width="2.16667"
 									stroke-linecap="round"
 									stroke-linejoin="round"
-								/></svg>`;
+								/></svg>
+							</button>`;
 			filterElement.classList.add("active-filter");
 			activeFilterContainer?.appendChild(filterElement);
 
