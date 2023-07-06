@@ -12,6 +12,7 @@ Research is based on recipe's name / description / ingredients
 export function searchRecipes(recipesList: Array<Recipe>, filterList: FilterList) {
 	const searchInputElement = document.querySelector("#header__input") as HTMLInputElement;
 	const resetSearchElement = document.querySelector(".header__reset-button");
+	const searchbarForm = document.querySelector(".header__searchbar");
 
 	searchInputElement?.addEventListener("input", () => {
 		clearTags(filterList); // Reset the filter when changing the search input
@@ -48,6 +49,9 @@ export function searchRecipes(recipesList: Array<Recipe>, filterList: FilterList
 		clearTags(filterList);
 		displayRecipes(recipesList, filterList, true, recipesList);
 	});
+
+	// * Prevent page reload when pressing enter inside form
+	searchbarForm?.addEventListener("submit", event => event.preventDefault());
 }
 
 // * normalize the string (remove accent - everything to lower case)
