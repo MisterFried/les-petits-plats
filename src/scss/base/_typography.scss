@@ -51,3 +51,9 @@ h6 {
 	font-size: var(--fs-300);
 	text-align: left;
 }
+
+@media screen and (width < 750px) {
+	.header__title {
+		font-size: var(--fs-500);
+	}
+}
