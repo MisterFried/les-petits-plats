@@ -83,6 +83,16 @@ export function fillDropdown(RecipesList: Array<Recipe>, filterList: FilterList,
 	applianceList.sort();
 	ustensilsList.sort();
 
+	// * Create the search input field for the ingredients dropdown
+	const ingredientSearchContainer = document.createElement("li");
+	const ingredientSearch = document.createElement("input");
+	ingredientSearch.classList.add("dropdown-search-input");
+	ingredientSearch.type = "text";
+	ingredientSearch.placeholder = "Ingrédient";
+	dropdownResearch(ingredientSearch); // Event listener for the research
+	ingredientSearchContainer.appendChild(ingredientSearch);
+	ingredientsDropdown?.appendChild(ingredientSearchContainer);
+
 	// * Fill each dropdown list with its corresponding elements and add the event listener on click
 	ingredientsList.forEach(ingredient => {
 		const liElement = document.createElement("li");
@@ -215,5 +225,20 @@ function selectFilter(
 			const filteredRecipesList = filterRecipes(initialSearchedRecipesList, filterList);
 			displayRecipes(filteredRecipesList, filterList, false, initialSearchedRecipesList);
 		}
+	});
+}
+
+// * Filter the results inside the ingredients dropdown based in the user input
+function dropdownResearch(input: HTMLInputElement) {
+	input.addEventListener("input", () => {
+		const contentList: Array<HTMLLIElement> = Array.from(
+			document.querySelectorAll(".dropdown-content > li:has(>button)")
+		);
+		contentList.forEach(element => {
+			const buttonElement = element.firstElementChild as HTMLButtonElement;
+			buttonElement.innerText.toLowerCase().includes(input.value.toLowerCase())
+				? (element.style.display = "block")
+				: (element.style.display = "none");
+		});
 	});
 }

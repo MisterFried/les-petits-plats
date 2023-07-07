@@ -82,3 +82,14 @@
 
 	transition: all 0.3s ease-in-out;
 }
+
+.dropdown-content li:has(> input) {
+	padding: 0.5rem;
+}
+
+.dropdown-search-input {
+	max-width: 100%;
+	padding: 0.5rem;
+	border: 1px solid var(--clr-grey);
+	background-color: transparent;
+}
