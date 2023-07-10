@@ -61,22 +61,41 @@ export function fillDropdown(RecipesList: Array<Recipe>, filterList: FilterList,
 	const ustensilsList: Array<string> = [];
 
 	// * Get all the different ingredients / appliance / ustensils from the currently displayed recipes
-	RecipesList.forEach(recipe => {
+	// * Alternate version using for loops instead of include / forEach / Filter
+	for (let i = 0; i < RecipesList.length; i++) {
 		// Ingredients
-		if (recipe.ingredients.length > 0) {
-			recipe.ingredients.forEach(ingredient => {
-				if (!ingredientsList.includes(ingredient.ingredient)) ingredientsList.push(ingredient.ingredient);
-			});
+		if (RecipesList[i].ingredients.length > 0) {
+			for (let j = 0; j < RecipesList[i].ingredients.length; j++) {
+				let containsIngredient = false;
+				for (let k = 0; k < ingredientsList.length; k++) {
+					if (ingredientsList[k] === RecipesList[i].ingredients[j].ingredient) containsIngredient = true;
+				}
+				if (!containsIngredient) ingredientsList.push(RecipesList[i].ingredients[j].ingredient);
+			}
 		}
+
 		// Appliance
-		if (!applianceList.includes(recipe.appliance)) applianceList.push(recipe.appliance);
-		// Ustensils
-		if (recipe.ustensils.length > 0) {
-			recipe.ustensils.forEach(ustensil => {
-				if (!ustensilsList.includes(ustensil)) ustensilsList.push(ustensil);
-			});
+		if (applianceList.length === 0) {
+			applianceList.push(RecipesList[i].appliance);
+		} else {
+			let containsAppliance = false;
+			for (let j = 0; j < applianceList.length; j++) {
+				if (RecipesList[i].appliance === applianceList[j]) containsAppliance = true;
+			}
+			if (!containsAppliance) applianceList.push(RecipesList[i].appliance);
 		}
-	});
+
+		// Ustensils
+		if (RecipesList[i].ustensils.length > 0) {
+			for (let j = 0; j < RecipesList[i].ustensils.length; j++) {
+				let containsUstensils = false;
+				for (let k = 0; k < ustensilsList.length; k++) {
+					if (RecipesList[i].ustensils[j] === ustensilsList[k]) containsUstensils = true;
+				}
+				if (!containsUstensils) ustensilsList.push(RecipesList[i].ustensils[j]);
+			}
+		}
+	}
 
 	// * Order alphabetically
 	ingredientsList.sort();

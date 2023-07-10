@@ -20,22 +20,25 @@ export function searchRecipes(recipesList: Array<Recipe>, filterList: FilterList
 		if (searchInputElement.value.length >= 3) {
 			const searchInput = normalizeString(searchInputElement.value); // normalize user input
 
-			const searchedRecipesList = recipesList.filter(recipe => {
-				const normalizedRecipeName = normalizeString(recipe.name);
-				const normalizedRecipeDescription = normalizeString(recipe.description);
-				if (normalizedRecipeName.includes(searchInput)) return true; // name research
-				if (normalizedRecipeDescription.includes(searchInput)) return true; // description research
-				if (recipe.ingredients.length > 0) {
-					// ingredients research
-					let containsIngredient = false;
-
-					recipe.ingredients.forEach(ingredient => {
-						const normalizedIngredientName = normalizeString(ingredient.ingredient);
-						if (normalizedIngredientName.includes(searchInput)) containsIngredient = true;
-					});
-					return containsIngredient;
+			// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+			// * Alternate research version using for loops instead of filter / forEach
+			// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+			const searchedRecipesList = [];
+			for (let i = 0; i < recipesList.length; i++) {
+				let recipeCorrespond = false;
+				const normalizedRecipeName = normalizeString(recipesList[i].name);
+				const normalizedRecipeDescription = normalizeString(recipesList[i].description);
+				if (normalizedRecipeName.includes(searchInput)) recipeCorrespond = true; // name search
+				if (normalizedRecipeDescription.includes(searchInput)) recipeCorrespond = true; // description search
+				if (recipesList[i].ingredients.length > 0) {
+					for (let j = 0; j < recipesList[i].ingredients.length; j++) {
+						if (recipesList[i].ingredients[j].ingredient.toLowerCase().includes(searchInput)) {
+							recipeCorrespond = true;
+						}
+					}
 				}
-			});
+				if (recipeCorrespond) searchedRecipesList.push(recipesList[i]);
+			}
 			displayRecipes(searchedRecipesList, filterList, true, searchedRecipesList); // display recipes corresponding to the research
 		} else {
 			displayRecipes(recipesList, filterList, true, recipesList); // display all the recipes

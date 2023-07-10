@@ -11,32 +11,42 @@ export function filterRecipes(recipesList: Array<Recipe>, filterList: FilterList
 	if (filterList.ingredients.length === 0 && filterList.appliance.length === 0 && filterList.ustensils.length === 0)
 		return recipesList;
 	else {
-		recipesList.forEach(recipe => {
-			let containsIngredient = true;
-			let containsAppliance = true;
-			let containsUstensils = true;
+		// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+		// * Alternate filter version using for loops instead of forEach / filter
+		// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+		// * Check if the recipe contains the ingredients
+		for (let i = 0; i < recipesList.length; i++) {
+			let containsIngredient = false;
+			let containsAppliance = false;
+			let containsUstensils = false;
 
-			// * Check if the recipe contains the ingredients
-			filterList.ingredients.forEach(ingredient => {
-				const recipeIngredientList: Array<string> = []; // Array containing the list of the recipe's ingredient name
-				recipe.ingredients.forEach(ingredient => recipeIngredientList.push(ingredient.ingredient));
-				if (!recipeIngredientList.includes(ingredient)) containsIngredient = false;
-			});
+			// ingredients
+			if (filterList.ingredients.length > 0) {
+				for (let j = 0; j < filterList.ingredients.length; j++) {
+					for (let k = 0; k < recipesList[i].ingredients.length; k++) {
+						if (recipesList[i].ingredients[k].ingredient === filterList.ingredients[j])
+							containsIngredient = true;
+					}
+				}
+			} else containsIngredient = true;
 
-			// * Check if the recipe use the correct appliance
-			filterList.appliance.forEach(appliance => {
-				if (!recipe.appliance.includes(appliance)) containsAppliance = false;
-			});
+			// Appliance
+			if (filterList.appliance.length > 0) {
+				for (let j = 0; j < filterList.appliance.length; j++) {
+					if (recipesList[i].appliance === filterList.appliance[j]) containsAppliance = true;
+				}
+			} else containsAppliance = true;
 
-			// * Check if the recipe contains the ustensils
-			filterList.ustensils.forEach(ustensil => {
-				if (!recipe.ustensils.includes(ustensil)) containsUstensils = false;
-			});
-
-			if (containsIngredient && containsAppliance && containsUstensils) {
-				filteredRecipesList.push(recipe);
-			}
-		});
+			// Ustensils
+			if (filterList.ustensils.length > 0) {
+				for (let j = 0; j < filterList.ustensils.length; j++) {
+					for (let k = 0; k < recipesList[i].ustensils.length; k++) {
+						if (recipesList[i].ustensils[k] === filterList.ustensils[j]) containsUstensils = true;
+					}
+				}
+			} else containsUstensils = true;
+			if (containsIngredient && containsAppliance && containsUstensils) filteredRecipesList.push(recipesList[i]);
+		}
 		return filteredRecipesList;
 	}
 }
