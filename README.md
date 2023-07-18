@@ -14,7 +14,7 @@ La priorité est de développer une fonctionnalité de recherche performante, of
 
 **Deploy:** Netlify
 
-## 🏃‍♂️ Run Locally
+## 🏃 Run Locally
 
 Clone the project
 
@@ -39,3 +39,7 @@ Start the server
 ```bash
   npm run dev
 ```
+
+## ⏳ Benchmark
+
+Benchmark pour comparer les performances des deux branches : https://jsben.ch/4F7eS
