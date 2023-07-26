@@ -48,7 +48,7 @@ h6 {
 }
 
 .dropdown-content li button,
-.dropdown-search-input {
+.dropdown-content > li > input {
 	font-size: var(--fs-300);
 	text-align: left;
 }

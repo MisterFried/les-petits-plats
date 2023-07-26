@@ -102,15 +102,39 @@ export function fillDropdown(RecipesList: Array<Recipe>, filterList: FilterList,
 	applianceList.sort();
 	ustensilsList.sort();
 
-	// * Create the search input field for the ingredients dropdown
-	const ingredientSearchContainer = document.createElement("li");
-	const ingredientSearch = document.createElement("input");
-	ingredientSearch.classList.add("dropdown-search-input");
-	ingredientSearch.type = "text";
-	ingredientSearch.placeholder = "Ingrédient";
-	dropdownResearch(ingredientSearch); // Event listener for the research
-	ingredientSearchContainer.appendChild(ingredientSearch);
-	ingredientsDropdown?.appendChild(ingredientSearchContainer);
+	// * Create the search input field for the filter
+	for (let i = 0; i < 3; i++) {
+		let filterCategory = "";
+		let parentFilterContainer = null;
+		switch (i) {
+			case 0:
+				filterCategory = "ingredients";
+				parentFilterContainer = ingredientsDropdown;
+				break;
+
+			case 1:
+				filterCategory = "appliance";
+				parentFilterContainer = applianceDropdown;
+				break;
+
+			case 2:
+				filterCategory = "ustensils";
+				parentFilterContainer = ustensilsDropdown;
+				break;
+
+			default:
+				break;
+		}
+
+		const filterSearchContainer = document.createElement("li");
+		const filterSearch = document.createElement("input");
+		filterSearch.classList.add(`${filterCategory}-dropdown-search-input`);
+		filterSearch.type = "text";
+		filterSearch.placeholder = filterCategory;
+		filterSearchContainer.appendChild(filterSearch);
+		parentFilterContainer?.appendChild(filterSearchContainer);
+		dropdownResearch(filterCategory);
+	}
 
 	// * Fill each dropdown list with its corresponding elements and add the event listener on click
 	ingredientsList.forEach(ingredient => {
@@ -160,7 +184,6 @@ export function clearTags(filterList: FilterList) {
 	filterList.ustensils = [];
 }
 
-// TODO ADD THE EVENT LISTENER WHEN PRESSING ENTER OR CHANGE THE ELEMENTS TO BUTTONS INSTEAD OF LI
 // * Enable / Disable keyboard navigation on the dropdown contents
 function KeyboardNav(target: Element, state: boolean) {
 	const dropdownList = target.nextElementSibling?.nextElementSibling;
@@ -248,14 +271,15 @@ function selectFilter(
 }
 
 // * Filter the results inside the ingredients dropdown based in the user input
-function dropdownResearch(input: HTMLInputElement) {
-	input.addEventListener("input", () => {
+function dropdownResearch(filterCategory: string) {
+	const filter = document.querySelector(`.${filterCategory}-dropdown-search-input`) as HTMLInputElement;
+	filter.addEventListener("input", () => {
 		const contentList: Array<HTMLLIElement> = Array.from(
-			document.querySelectorAll(".dropdown-content > li:has(>button)")
+			document.querySelectorAll(`#${filterCategory}-dropdown-list > li:nth-child(n+2)`)
 		);
 		contentList.forEach(element => {
 			const buttonElement = element.firstElementChild as HTMLButtonElement;
-			buttonElement.innerText.toLowerCase().includes(input.value.toLowerCase())
+			buttonElement.innerText.toLowerCase().includes(normalizeString(filter.value))
 				? (element.style.display = "block")
 				: (element.style.display = "none");
 		});
