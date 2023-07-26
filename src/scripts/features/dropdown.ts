@@ -105,20 +105,24 @@ export function fillDropdown(RecipesList: Array<Recipe>, filterList: FilterList,
 	// * Create the search input field for the filter
 	for (let i = 0; i < 3; i++) {
 		let filterCategory = "";
+		let placeholder = "";
 		let parentFilterContainer = null;
 		switch (i) {
 			case 0:
 				filterCategory = "ingredients";
+				placeholder = "Ingrédients";
 				parentFilterContainer = ingredientsDropdown;
 				break;
 
 			case 1:
 				filterCategory = "appliance";
+				placeholder = "Appareils";
 				parentFilterContainer = applianceDropdown;
 				break;
 
 			case 2:
 				filterCategory = "ustensils";
+				placeholder = "Ustensils";
 				parentFilterContainer = ustensilsDropdown;
 				break;
 
@@ -130,7 +134,7 @@ export function fillDropdown(RecipesList: Array<Recipe>, filterList: FilterList,
 		const filterSearch = document.createElement("input");
 		filterSearch.classList.add(`${filterCategory}-dropdown-search-input`);
 		filterSearch.type = "text";
-		filterSearch.placeholder = filterCategory;
+		filterSearch.placeholder = placeholder;
 		filterSearchContainer.appendChild(filterSearch);
 		parentFilterContainer?.appendChild(filterSearchContainer);
 		dropdownResearch(filterCategory);
