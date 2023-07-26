@@ -32,7 +32,7 @@ export function searchRecipes(recipesList: Array<Recipe>, filterList: FilterList
 				if (normalizedRecipeDescription.includes(searchInput)) recipeCorrespond = true; // description search
 				if (recipesList[i].ingredients.length > 0) {
 					for (let j = 0; j < recipesList[i].ingredients.length; j++) {
-						if (recipesList[i].ingredients[j].ingredient.toLowerCase().includes(searchInput)) {
+						if (normalizeString(recipesList[i].ingredients[j].ingredient).includes(searchInput)) {
 							recipeCorrespond = true;
 						}
 					}
