@@ -283,7 +283,7 @@ function dropdownResearch(filterCategory: string) {
 		);
 		contentList.forEach(element => {
 			const buttonElement = element.firstElementChild as HTMLButtonElement;
-			buttonElement.innerText.toLowerCase().includes(normalizeString(filter.value))
+			normalizeString(buttonElement.innerText).includes(normalizeString(filter.value))
 				? (element.style.display = "block")
 				: (element.style.display = "none");
 		});
